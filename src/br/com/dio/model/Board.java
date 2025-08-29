@@ -5,10 +5,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static br.com.dio.model.GameStatusEnum.*;
-import static java.util.Objects.isNull;
-import static java.util.Objects.nonNull;
-
 /**
  * Representa o tabuleiro de Sudoku (9x9).
  * Contém células do tipo Space, que podem ser fixas ou editáveis.
@@ -27,15 +23,17 @@ public class Board {
 
     /** Retorna o status atual do jogo */
     public GameStatusEnum getStatus() {
-        if (spaces.stream().flatMap(Collection::stream).noneMatch(s -> !s.isFixed() && nonNull(s.getValue()))) {
-            return NON_STARTED;
+        if (spaces.stream().flatMap(Collection::stream).noneMatch(s -> !s.isFixed() && !s.isEmpty())) {
+            return GameStatusEnum.NOT_STARTED;
         }
-        return spaces.stream().flatMap(Collection::stream).anyMatch(Space::isEmpty) ? INCOMPLETE : COMPLETE;
+        return spaces.stream().flatMap(Collection::stream).anyMatch(Space::isEmpty)
+                ? GameStatusEnum.IN_PROGRESS
+                : GameStatusEnum.COMPLETE;
     }
 
     /** Checa se há erros (duplicatas em linhas, colunas ou blocos) */
     public boolean hasErrors() {
-        if (getStatus() == NON_STARTED) return false;
+        if (getStatus() == GameStatusEnum.NOT_STARTED) return false;
         return !isBoardValid();
     }
 
