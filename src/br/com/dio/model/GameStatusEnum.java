@@ -1,19 +1,11 @@
 package br.com.dio.model;
 
+/**
+ * Enum que representa o estado atual do jogo de Sudoku.
+ */
 public enum GameStatusEnum {
-
-    NON_STARTED("não iniciado"),
-    INCOMPLETE("incompleto"),
-    COMPLETE("completo");
-
-    private String label;
-
-    GameStatusEnum(final String label){
-        this.label = label;
-    }
-
-    public String getLabel() {
-        return label;
-    }
-
+    NOT_STARTED,   // Jogo ainda não iniciado
+    IN_PROGRESS,   // Jogo em andamento (parcialmente preenchido)
+    COMPLETE,      // Jogo completo e válido
+    INVALID;       // Jogo preenchido mas com erros
 }
